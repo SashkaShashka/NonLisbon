@@ -9,10 +9,10 @@ export class SuperAuthHeader extends HTMLElement {
         const image = document.createElement("img");
         image.setAttribute("height", "60em");
         image.setAttribute("width", "60em");
-        image.setAttribute("src", "/________my_project/icon.png");
+        image.setAttribute("src", "/weather/icon.png");
         image.classList.add("me-3");
         const title = document.createElement("a");
-        title.setAttribute("href", "/________my_project/index.html");
+        title.setAttribute("href", "../index.html");
         title.classList.add("navbar-brand");
         title.setAttribute("id", "titlePage");
         title.innerText = "Что-то";
