@@ -24,7 +24,7 @@ export class HttpStatusError extends Error {
 }
 
 export async function apiRequest(path, method = "GET", body) {
-  const response = await fetch(createHttpRequest(path, method, body));
+  const response = await fetch(path);
   if (!response.ok) {
     const errorMessage = (await response.text()) || response.statusText;
     console.error(errorMessage);
