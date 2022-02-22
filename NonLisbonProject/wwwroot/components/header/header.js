@@ -1,8 +1,4 @@
-import {
-    zero_first_format,
-    getWeekDay,
-    _getMonth,
-} from "/utils/time_reader.js";
+import { zero_first_format, getWeekDay, _getMonth } from "/utils/time_reader.js";
 
 export class SuperAuthHeader extends HTMLElement {
     constructor() {
@@ -55,27 +51,27 @@ export class SuperAuthHeader extends HTMLElement {
         const li1 = li.cloneNode(true);
         li1.firstChild.innerText = "Погода";
         li1.firstChild.setAttribute("href", "/index.html");
-        //if (page === "staff" || page === "/") {
-        li1.firstChild.classList.add("active");
-        //}
+        if (page === "staff" || page === "/") {
+            li1.firstChild.classList.add("active");
+        }
 
         headNav.append(li1);
 
         const li2 = li.cloneNode(true);
         li2.firstChild.innerText = "Одеться в путешествие";
-        li2.firstChild.setAttribute("href", "/index.html");
-        //if (page === "staff" || page === "/") {
-        //li2.firstChild.classList.add("active");
-        //}
+        li2.firstChild.setAttribute("href", "/travel/index.html");
+        if (page === "travel") {
+            li2.firstChild.classList.add("active");
+        }
 
         headNav.append(li2);
 
         const li3 = li.cloneNode(true);
         li3.firstChild.innerText = "Окно в город";
-        li3.firstChild.setAttribute("href", "/index.html");
-        //if (page === "staff" || page === "/") {
-        //li3.firstChild.classList.add("active");
-        //}
+        li3.firstChild.setAttribute("href", "/windowCity/index.html");
+        if (page === "windowCity") {
+            li3.firstChild.classList.add("active");
+        }
 
         headNav.append(li3);
 

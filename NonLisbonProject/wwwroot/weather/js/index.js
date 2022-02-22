@@ -1,5 +1,5 @@
 import api from "/utils/api.js";
-import { getNowTime } from "../../utils/time_reader.js";
+import { getNowTime, _getMonth } from "../../utils/time_reader.js";
 import { apiRequest } from "../../utils/api.js";
 /*
 function getIconRequest() {
@@ -21,10 +21,20 @@ function getIconRequest() {
             console.log(imageBlob);
         });
 }
+var date = new Date();
 const iconCard = document.querySelector("icon_weather");
 const icon = await getIconRequest();
 const timeNow = document.querySelector("#time_now");
 console.log(timeNow.innerHTML);
-timeNow.innerHTML = getNowTime();
+timeNow.innerHTML = getNowTime(date);
 
-
+const day_one = document.querySelector("#day_one");
+const day_two = document.querySelector("#day_two");
+const day_three = document.querySelector("#day_three");
+const day_four = document.querySelector("#day_four");
+date.setDate(date.getDate() + 2);
+day_two.firstElementChild.innerHTML = date.getDate() + " " + _getMonth(date);
+date.setDate(date.getDate() + 1);
+day_three.firstElementChild.innerHTML = date.getDate() + " " + _getMonth(date);
+date.setDate(date.getDate() + 1);
+day_four.firstElementChild.innerHTML = date.getDate() + " " + _getMonth(date);

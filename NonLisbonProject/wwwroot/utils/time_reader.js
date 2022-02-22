@@ -17,14 +17,12 @@ export function _getMonth(date) {
     return month[date.getMonth()];
 }
 
-export function getNowTime(){
-    var current_datetime = new Date();
+export function getNowTime(current_datetime) {
     //var day = zero_first_format(current_datetime.getDate());
     var hours = zero_first_format(current_datetime.getHours());
     var minutes = zero_first_format(current_datetime.getMinutes());
-   
+
     //var day_week = getWeekDay(current_datetime);
 
     return "Сейчас " + hours + ":" + minutes;
 }
-
