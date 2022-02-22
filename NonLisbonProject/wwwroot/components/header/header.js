@@ -1,3 +1,9 @@
+import {
+    zero_first_format,
+    getWeekDay,
+    _getMonth,
+} from "/utils/time_reader.js";
+
 export class SuperAuthHeader extends HTMLElement {
     constructor() {
         super();
@@ -78,30 +84,13 @@ export class SuperAuthHeader extends HTMLElement {
         date_time.classList.add("color_datetime", "navbar-brand");
         date_time.innerHTML = this.date_time();
     }
-    zero_first_format(value) {
-        if (value < 10) {
-            value = "0" + value;
-        }
-        return value;
-    }
 
-    getWeekDay(date) {
-        let days = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
-
-        return days[date.getDay()];
-    }
-
-    getMonth(date) {
-        let month = ["Января", "Февраля", "Марта", "Апреля", "Майя", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"];
-
-        return month[date.getMonth()];
-    }
     date_time() {
         var current_datetime = new Date();
-        var day = this.zero_first_format(current_datetime.getDate());
-        var month = this.getMonth(current_datetime);
+        var day = zero_first_format(current_datetime.getDate());
+        var month = _getMonth(current_datetime);
 
-        var day_week = this.getWeekDay(current_datetime);
+        var day_week = getWeekDay(current_datetime);
 
         return day + " " + month + ", " + day_week;
     }
