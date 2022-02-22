@@ -59,12 +59,12 @@
                         </div>
                         <div class="d-flex flex-nowrap bd-highlight me-3" id="main-wind&water">
                             <div class="order-1 p-2 bd-highlight me-5">
-                                <i class="bi bi-wind" style="font-size: 1.5em"></i>
-                                <span style="font-size: 1.5em">5.4 м/с, ЮВ</span>
+                                <i class="bi bi-wind font-style-1"></i>
+                                <span class="font-style-1">5.4 м/с, ЮВ</span>
                             </div>
                             <div class="order-1 p-2 bd-highlight">
-                                <i class="bi bi-droplet " style="font-size: 1.5em"></i>
-                                <span style="font-size: 1.5em">91%</span>
+                                <i class="bi bi-droplet font-style-1" ></i>
+                                <span class="font-style-1">91%</span>
                             </div>
                         </div>
                         <div class="border-top border-3 mx-3 my-3"></div>
@@ -108,16 +108,15 @@
                             </div>
                         </div>
                         <div class="my-2">
-                            <i class="bi bi-wind" style="font-size: 1.2em"></i>
-                            <span style="font-size: 1.2em">5.4 м/с, ЮВ</span>
+                            <i class="bi bi-wind font-style-2"></i>
+                            <span class="font-style-2">5.4 м/с, ЮВ</span>
                         </div>
                         <div class="d-flex justify-content-between">
                             <div class="my-2">
-                                <i class="bi bi-droplet" style="font-size: 1.2em"></i>
-                                <span style="font-size: 1.2em">91%</span>
+                                <i class="bi bi-droplet font-style-2"></i>
+                                <span class="font-style-2">91%</span>
                             </div>
-                            <a class="bi bi-three-dots mt-2" onclick="console.log('hello')" href="#"
-                                style="font-size:1.5em; color:black">
+                            <a class="bi bi-three-dots mt-2 font-style-1-color-black" onclick="console.log('hello')" href="#">
                             </a>
                         </div>
                     </div>
@@ -138,16 +137,15 @@
                             </div>
                         </div>
                         <div class="my-2">
-                            <i class="bi bi-wind" style="font-size: 1.2em"></i>
-                            <span style="font-size: 1.2em">5.4 м/с, ЮВ</span>
+                            <i class="bi bi-wind font-style-2"></i>
+                            <span class="font-style-2">5.4 м/с, ЮВ</span>
                         </div>
                         <div class="d-flex justify-content-between">
                             <div class="my-2">
-                                <i class="bi bi-droplet" style="font-size: 1.2em"></i>
-                                <span style="font-size: 1.2em">91%</span>
+                                <i class="bi bi-droplet font-style-2"></i>
+                                <span class="font-style-2">91%</span>
                             </div>
-                            <a class="bi bi-three-dots mt-2" onclick="console.log('hello')" href="#"
-                                style="font-size:1.5em; color:black">
+                            <a class="bi bi-three-dots mt-2 font-style-1-color-black" onclick="console.log('hello')" href="#">
                             </a>
                         </div>
                     </div>
@@ -168,16 +166,15 @@
                             </div>
                         </div>
                         <div class="my-2">
-                            <i class="bi bi-wind" style="font-size: 1.2em"></i>
-                            <span style="font-size: 1.2em">5.4 м/с, ЮВ</span>
+                            <i class="bi bi-wind font-style-2" ></i>
+                            <span class="font-style-2">5.4 м/с, ЮВ</span>
                         </div>
                         <div class="d-flex justify-content-between">
                             <div class="my-2">
-                                <i class="bi bi-droplet" style="font-size: 1.2em"></i>
-                                <span style="font-size: 1.2em">91%</span>
+                                <i class="bi bi-droplet font-style-2"></i>
+                                <span class="font-style-2">91%</span>
                             </div>
-                            <a class="bi bi-three-dots mt-2" onclick="console.log('hello')" href="#"
-                                style="font-size:1.5em; color:black">
+                            <a class="bi bi-three-dots mt-2 font-style-1-color-black" onclick="console.log('hello')" href="#">
                             </a>
                         </div>
                     </div>
@@ -198,16 +195,15 @@
                             </div>
                         </div>
                         <div class="my-2">
-                            <i class="bi bi-wind" style="font-size: 1.2em"></i>
-                            <span style="font-size: 1.2em">5.4 м/с, ЮВ</span>
+                            <i class="bi bi-wind font-style-2"></i>
+                            <span class="font-style-2">5.4 м/с, ЮВ</span>
                         </div>
                         <div class="d-flex justify-content-between">
                             <div class="my-2">
-                                <i class="bi bi-droplet" style="font-size: 1.2em"></i>
-                                <span style="font-size: 1.2em">91%</span>
+                                <i class="bi bi-droplet font-style-2"></i>
+                                <span class="font-style-2">91%</span>
                             </div>
-                            <a class="bi bi-three-dots mt-2" onclick="console.log('hello')" href="#"
-                                style="font-size:1.5em; color:black">
+                            <a class="bi bi-three-dots mt-2 font-style-1-color-black" onclick="console.log('hello')" href="#">
                             </a>
                         </div>
                     </div>
@@ -262,7 +258,37 @@
                     </button>
                 </div>
             </div>
-
+            <template id="CardOfWeather">
+                <div class="card text-dark bg-light" id="">
+                    <div class="card-header">День месяц</div>
+                    <div class="card-body">
+                        <div class="d-flex flex-nowrap bd-highlight text-center">
+                            <div class="order-1 mt-3 bd-highlight">
+                                <h3 id="degrees_main">Температура</h3>
+                            </div>
+                            <div class="order-2 p-2 bd-highlight" id="icon_weather">
+                                <img height="70px" width="70px" src="http://openweathermap.org/img/wn/10d@2x.png"
+                                    alt="">
+                            </div>
+                            <div class="order-3 mt-3 bd-highlight" id="">
+                                <p>Пояснения погоды</p>
+                            </div>
+                        </div>
+                        <div class="my-2">
+                            <i class="bi bi-wind font-style-2"></i>
+                            <span class="font-style-2">Ветер м/с направление</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div class="my-2">
+                                <i class="bi bi-droplet font-style-2"></i>
+                                <span class="font-style-2">Влажность %</span>
+                            </div>
+                            <a class="bi bi-three-dots mt-2 font-style-1-color-black" onclick="console.log('hello')" href="#">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </template>
 
     </main>
     <footer class="d-flex flex-wrap justify-content-between align-items-center pb-2 border-top text-secondary">
