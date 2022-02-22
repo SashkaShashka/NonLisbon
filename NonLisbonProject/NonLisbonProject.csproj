@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="wwwroot\" />
     <Folder Include="wwwroot\components\auth.header\" />
+    <Folder Include="wwwroot\header\" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
