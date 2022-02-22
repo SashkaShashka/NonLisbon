@@ -1,0 +1,53 @@
+* {
+    /* Шрифт по умолчанию */
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    /* Включать ширину рамки в размер блока.
+       Иначе при наличии рамки блоки будут "вылезать" в стороны. */
+    box-sizing: border-box;
+}
+.positions-container {
+    gap: 12px;
+}
+.mar {
+    margin: 5pt;
+}
+/* Опускаем подвал к нижней границе страницы,
+   растянув main */
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.big-checkbox {
+    width: 20px;
+    height: 20px;
+}
+.color_datetime {
+    color: white;
+    font-size: medium;
+}
+.size-div {
+    display: inline-block;
+    border: 1px solid purple;
+}
+.wrapper {
+    width: 100%;
+    height: 400px;
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-rows: 50% 50%;
+}
+.wrapper div:nth-child(1) {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+main {
+    flex: 1;
+}
+
+footer {
+    font-size: smaller;
+}
