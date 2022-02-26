@@ -15,19 +15,14 @@
     <script src="/components/header/header.js" type="module"></script>
     <script src="./weather/js/index.js" type="module"></script>
     <link href="./weather/_css/style.css" rel="stylesheet" />
-    <!--
-    <link href="_css/style.css" rel="stylesheet" />
-    <script src="/components/auth.header/header.js" type="module"></script>
-
-        <script src="staff/js/staff.list.js" type="module"></script>> 
-    -->
 </head>
 
 <body>
     <my-header value="NonLisbon"></my-header>
     <main class="my-3">
         <div class="container-fluid  px-5">
-            <div class="row mb-1">
+            <div id="loading"></div>
+            <div class="row mb-1" id="find_panel">
                 <div class="col">
                     <select class="form-select" aria-label="Default select example">
                         <option selected>Выбор города</option>
@@ -46,12 +41,12 @@
                         <div class="card-body">
                             <h3 class="card-title" id="city">Москва</h3>
                             <h5 class="card-text" id="dayName">Сейчас 15:15</h5>
-                            <div class="d-flex flex-nowrap bd-highlight me-4" id="main-weather">
+                            <div class="d-flex flex-nowrap bd-highlight me-4">
                                 <div class="order-1 mt-4 me-3 bd-highlight">
                                     <h1 id="degrees">-3&deg</h1>
                                 </div>
-                                <div class="order-2 mx-5 bd-highlight" id="icon_weather">
-                                    <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="">
+                                <div class="order-2 mx-5 bd-highlight">
+                                    <img id="icon_weather" src="http://openweathermap.org/img/wn/10d@2x.png" alt="">
                                 </div>
                                 <div class="order-3 mt-4 mx-4 bd-highlight" id="">
                                     <h5 id="description">Дождь</h5>
@@ -72,22 +67,22 @@
                             <div class="d-flex justify-content-around">
                                 <div class="text-center" id="morning">
                                     <h4>Утро</h4>
-                                    <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="">
+                                    <img id="img" src="http://openweathermap.org/img/wn/10d@2x.png" alt="">
                                     <h4>-3&deg</h4>
                                 </div>
                                 <div class="text-center" id="day">
                                     <h4>День</h4>
-                                    <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="">
+                                    <img id="img" src="http://openweathermap.org/img/wn/10d@2x.png" alt="">
                                     <h4>-3&deg</h4>
                                 </div>
                                 <div class="text-center" id="evening">
                                     <h4>Вечер</h4>
-                                    <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="">
+                                    <img id="img" src="http://openweathermap.org/img/wn/10d@2x.png" alt="">
                                     <h4>-3&deg</h4>
                                 </div>
                                 <div class="text-center" id="night">
                                     <h4>Ночь</h4>
-                                    <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="">
+                                    <img id="img" src="http://openweathermap.org/img/wn/10d@2x.png" alt="">
                                     <h4>-3&deg</h4=>
                                 </div>
                             </div>
@@ -117,23 +112,24 @@
                             <i class="bi bi-wind font-style-2"></i>
                             <span class="font-style-2" id="wind">Ветер м/с ЮВ</span>
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <div class="my-2">
-                                <i class="bi bi-droplet font-style-2"></i>
-                                <span class="font-style-2" id="water">Влажность %</span>
-                            </div>
-                            <a class="bi bi-three-dots mt-2 font-style-1-color-black" onclick="console.log('hello')"
-                                href="#">
-                            </a>
+                        <div class="my-2">
+                            <i class="bi bi-droplet font-style-2"></i>
+                            <span class="font-style-2" id="water">Влажность %</span>
                         </div>
                     </div>
                 </div>
             </template>
 
     </main>
-    <footer class="d-flex flex-wrap justify-content-between align-items-center pb-2 border-top text-secondary">
-        <div class="container"><a href="https://webzavod.ru" class="link-info">Вебзавод</a> Учебный курс ДБР 2021-2022.
-            Андреев Александр</div>
+    <!---
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          / <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+-->
+    <footer class="d-flex flex-wrap pb-2 border-top text-secondary">
+        <div class="container-fluid mx-5">Учебный проект команды NonLisbon</div>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
