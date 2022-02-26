@@ -53,7 +53,7 @@ footer {
 }
 
 .font-style-1 {
-    font-size: 1.5em
+    font-size: 1.5em;
 }
 
 .font-style-1-color-black {
@@ -62,5 +62,9 @@ footer {
 }
 
 .font-style-2 {
-    font-size: 1.2em
+    font-size: 1.2em;
+}
+.font-style-spinner {
+    width: 5rem;
+    height: 5rem;
 }
