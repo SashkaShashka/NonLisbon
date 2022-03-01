@@ -97,6 +97,7 @@ export class SuperAuthHeader extends HTMLElement {
     set value(_value) {
         this.setAttribute("value", _value);
     }
+    
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue == newValue) return;
         switch (name) {
@@ -110,5 +111,6 @@ export class SuperAuthHeader extends HTMLElement {
                 break;
         }
     }
+    
 }
 customElements.define("my-header", SuperAuthHeader);
