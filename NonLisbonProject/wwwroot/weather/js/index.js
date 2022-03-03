@@ -12,16 +12,16 @@ let weatherToday = [];
 let indexTomorrow = 1;
 
 var cities = [
-    {name:"Москва", latitude: 55.7504461, longitude: 37.6174943, timezone: 3},
-    {name:"Дели", latitude: 28.6517178, longitude: 77.2219388, timezone: 5.5},
-    {name:"Самара", latitude: 40.7127281, longitude: 50.113987, timezone: 4},
-    {name:"Нью-Йорк", latitude: 40.7127281, longitude:-74.0060152, timezone: -5},
-    {name:"Лондон", latitude: 51.5073219, longitude: -0.1276474, timezone: 0},
-    {name:"Париж", latitude: 48.8588897, longitude: 2.3200410217200766, timezone: 1},
-    {name:"Токио", latitude: 35.6828387, longitude: 139.7594549, timezone: 9},
-    {name:"Мадрид", latitude: 40.4167047, longitude: -3.7035825, timezone: 1},
-    {name:"Рим", latitude: 41.8933203, longitude: 12.4829321, timezone: 1},
-    {name:"Сидней", latitude: -33.768528, longitude: 150.9568559523945, timezone: 11},
+    { name: "Москва", latitude: 55.7504461, longitude: 37.6174943, timezone: 3 },
+    { name: "Дели", latitude: 28.6517178, longitude: 77.2219388, timezone: 5.5 },
+    { name: "Самара", latitude: 53.2028, longitude: 50.1408, timezone: 4 },
+    { name: "Нью-Йорк", latitude: 40.7127281, longitude: -74.0060152, timezone: -5 },
+    { name: "Лондон", latitude: 51.5073219, longitude: -0.1276474, timezone: 0 },
+    { name: "Париж", latitude: 48.8588897, longitude: 2.3200410217200766, timezone: 1 },
+    { name: "Токио", latitude: 35.6828387, longitude: 139.7594549, timezone: 9 },
+    { name: "Мадрид", latitude: 40.4167047, longitude: -3.7035825, timezone: 1 },
+    { name: "Рим", latitude: 41.8933203, longitude: 12.4829321, timezone: 1 },
+    { name: "Сидней", latitude: -33.768528, longitude: 150.9568559523945, timezone: 11 },
 ];
 
 function getCoordinate() {
@@ -41,13 +41,14 @@ function getWeathersRequest() {
 }
 function getWeatherRequestToday(preDay = false) {
     var workDate = new Date();
-    workDate.setUTCHours(-timezone, 0, 0, 0);
-    console.log("Разница " +workDate.getTimezoneOffset() +" "+ timezone* 60);
-    console.log(workDate);
+    workDate.setHours(workDate.getHours() - 2);
+    console.log("Разница " + workDate.getTimezoneOffset() + " " + timezone * 60);
     if (preDay) {
         workDate.setDate(workDate.getDate() - 1);
+        console.log("По идее ночь предыдущего дня:" + workDate);
+    } else {
+        console.log("По идее ночь сегодняшнего дня:" + workDate);
     }
-    console.log(workDate);
     workDate = Math.floor(workDate.getTime() / 1000);
     console.log(workDate);
 
@@ -72,7 +73,7 @@ async function success(pos) {
     console.log(longitude);
     city = (await getCoordinate())[0].local_names.ru;
     console.log(city);
-    
+
     // перерисовать страницу
     panel.classList.add("visually-hidden");
     container.innerHTML = "";
@@ -82,7 +83,7 @@ async function success(pos) {
     date.setMinutes(date.getMinutes() + date.getTimezoneOffset() + timezone * 60);
     loading.innerHTML = "";
     panel.classList.remove("visually-hidden");
-    addCity(city, true)
+    addCity(city, true);
     fillCards();
     console.log("success");
 }
@@ -96,8 +97,12 @@ function error(err) {
     console.log("error");
 }
 function findIndexNow() {
-    date.setUTCHours(-timezone, 0, 0, 0);
-    var helpTime = date.getTime() / 1000;
+    console.log("Дата сейчас, прямо сейчас: " + date);
+    console.log("timezone:" + timezone);
+    date.setUTCHours(0, 0, 0, 0);
+    console.log("Дата сегодня полночь date: " + date);
+    var helpTime = (date.getTime() - Math.round(timezone) * 3600 * 1000) / 1000;
+    console.log("Дата сегодня полночь helpTime: " + helpTime);
     for (let index = 0; index < weatherToday.length; index++) {
         if (weatherToday[index].dt == helpTime) {
             return index;
@@ -154,19 +159,19 @@ function fillCard(card, indexDay, main = false) {
         card.querySelector("#water").innerHTML = weatherNow.humidity + "%";
         var indexToday = findIndexNow();
         console.log(indexToday);
-        card.querySelector("#morning").lastElementChild.innerHTML = Math.round(weatherToday[indexToday + 6].temp) + "&deg"+ (indexToday+ 6);
+        card.querySelector("#morning").lastElementChild.innerHTML = Math.round(weatherToday[indexToday + 6].temp) + "&deg";
         card.querySelector("#morning")
             .querySelector("#img")
             .setAttribute("src", "http://openweathermap.org/img/wn/" + weatherToday[indexToday + 6].weather[0].icon + "@2x.png");
-        card.querySelector("#day").lastElementChild.innerHTML = Math.round(weatherToday[indexToday + 12].temp) + "&deg" + (indexToday+ 12);
+        card.querySelector("#day").lastElementChild.innerHTML = Math.round(weatherToday[indexToday + 12].temp) + "&deg";
         card.querySelector("#day")
             .querySelector("#img")
             .setAttribute("src", "http://openweathermap.org/img/wn/" + weatherToday[indexToday + 12].weather[0].icon + "@2x.png");
-        card.querySelector("#evening").lastElementChild.innerHTML = Math.round(weatherToday[indexToday + 18].temp) + "&deg" + (indexToday+ 18);
+        card.querySelector("#evening").lastElementChild.innerHTML = Math.round(weatherToday[indexToday + 18].temp) + "&deg";
         card.querySelector("#evening")
             .querySelector("#img")
             .setAttribute("src", "http://openweathermap.org/img/wn/" + weatherToday[indexToday + 18].weather[0].icon + "@2x.png");
-        card.querySelector("#night").lastElementChild.innerHTML = Math.round(weatherToday[indexToday + 24].temp) + "&deg" + (indexToday+ 24);
+        card.querySelector("#night").lastElementChild.innerHTML = Math.round(weatherToday[indexToday + 24].temp) + "&deg";
         card.querySelector("#night")
             .querySelector("#img")
             .setAttribute("src", "http://openweathermap.org/img/wn/" + weatherToday[indexToday + 24].weather[0].icon + "@2x.png");
@@ -203,6 +208,7 @@ async function getAllWeather() {
         weatherToday.push(iterator);
         console.log(iterator);
     }
+    weatherToday.pop();
     console.log("До конца дня");
     //заполнили до конца дня+
     for (const iterator of helpObject.hourly) {
@@ -217,9 +223,13 @@ async function getAllWeather() {
         weathers.push(iterator);
     }
     console.log(weatherToday);
+    var inn = 0;
+    weatherToday.forEach((element) => {
+        console.log(inn++ + "   " + new Date(element.dt * 1000));
+    });
 }
 
-function fillCites(){
+function fillCites() {
     select_city.innerHTML = "";
     for (let city of cities) {
         const Option = document.createElement("option");
@@ -229,21 +239,20 @@ function fillCites(){
     }
 }
 
-function setCity(index){
+function setCity(index) {
     city = cities[index].name;
     latitude = cities[index].latitude;
     longitude = cities[index].longitude;
     timezone = cities[index].timezone;
 }
 
-function addCity(name, selected = false, ADD = false){
+function addCity(name, selected = false, ADD = false) {
     const Option = document.createElement("option");
     Option.setAttribute("value", name);
     Option.innerText = name;
-    
+
     select_city.append(Option);
-    if(selected)
-    {
+    if (selected) {
         select_city.value = name;
     }
 }
@@ -259,31 +268,33 @@ const container = document.querySelector("#main_container");
 const panel = document.querySelector("#find_panel");
 
 const loading = document.querySelector("#loading");
-const select_city = document.querySelector("#select_city")
+const select_city = document.querySelector("#select_city");
 panel.classList.add("visually-hidden");
 
-select_city.addEventListener('change', async function(){
-    if(this.value != city){
-        let index = 0
-        for (; index < cities.length; index++) {
-            if (this.value == cities[index].name)
-                break;
+select_city.addEventListener(
+    "change",
+    async function () {
+        if (this.value != city) {
+            let index = 0;
+            for (; index < cities.length; index++) {
+                if (this.value == cities[index].name) break;
+            }
+            setCity(index);
+            console.log(city);
+
+            //перерисовать страницу
+            panel.classList.add("visually-hidden");
+            container.innerHTML = "";
+            loading.innerHTML = spinnerInTable;
+            await getAllWeather();
+            date.setMinutes(date.getMinutes() + date.getTimezoneOffset() + timezone * 60);
+            loading.innerHTML = "";
+            panel.classList.remove("visually-hidden");
+            fillCards();
         }
-        setCity(index);
-        console.log(city);
-        
-        //перерисовать страницу
-        panel.classList.add("visually-hidden");
-        container.innerHTML = "";
-        loading.innerHTML = spinnerInTable;
-        await getAllWeather();
-        date.setMinutes(date.getMinutes() + date.getTimezoneOffset() + timezone * 60);
-        loading.innerHTML = "";
-        panel.classList.remove("visually-hidden");
-        fillCards();
-        
-    }
-}, false);
+    },
+    false
+);
 
 loading.innerHTML = spinnerInTable;
 fillCites();
