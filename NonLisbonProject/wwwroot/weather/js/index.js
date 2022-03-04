@@ -1,20 +1,19 @@
 import api from "/utils/api.js";
 import { getNowTime, _getMonth } from "../../utils/time_reader.js";
 const KeyAPI = "8e60906d7c520861f76a479b2765c285";
-var city;
 var date = {};
-var timezone;
-var latitude;
-var longitude;
+var city = "Москва";
+var timezone = 3;
+var latitude = 55.7504461;
+var longitude = 37.6174943;
 let weatherNow = {};
 let weathers = [];
 let weatherToday = [];
 let indexTomorrow = 1;
 
-var cities = [
+var defaultCities = [
     { name: "Москва", latitude: 55.7504461, longitude: 37.6174943, timezone: 3 },
     { name: "Дели", latitude: 28.6517178, longitude: 77.2219388, timezone: 5.5 },
-    { name: "Самара", latitude: 53.2028, longitude: 50.1408, timezone: 4 },
     { name: "Нью-Йорк", latitude: 40.7127281, longitude: -74.0060152, timezone: -5 },
     { name: "Лондон", latitude: 51.5073219, longitude: -0.1276474, timezone: 0 },
     { name: "Париж", latitude: 48.8588897, longitude: 2.3200410217200766, timezone: 1 },
@@ -23,7 +22,10 @@ var cities = [
     { name: "Рим", latitude: 41.8933203, longitude: 12.4829321, timezone: 1 },
     { name: "Сидней", latitude: -33.768528, longitude: 150.9568559523945, timezone: 11 },
 ];
-
+var cities = new Map();
+for (var _city of defaultCities) {
+    cities.set(_city.name, { latitude: _city.latitude, longitude: _city.longitude, timezone: _city.timezone });
+}
 function getCoordinate() {
     return api.get("https://api.openweathermap.org/geo/1.0/reverse?lat=" + latitude + "&lon=" + longitude + "&appid=" + KeyAPI + "&limit=1");
 }
@@ -83,7 +85,7 @@ async function success(pos) {
     date.setMinutes(date.getMinutes() + date.getTimezoneOffset() + timezone * 60);
     loading.innerHTML = "";
     panel.classList.remove("visually-hidden");
-    addCity(city, true);
+    addCity(true);
     fillCards();
     console.log("success");
 }
@@ -231,29 +233,24 @@ async function getAllWeather() {
 
 function fillCites() {
     select_city.innerHTML = "";
-    for (let city of cities) {
-        const Option = document.createElement("option");
-        Option.setAttribute("value", city.name);
-        Option.innerText = city.name;
-        select_city.append(Option);
+    for (var city of cities.keys()) {
+        const _option = document.createElement("option");
+        _option.setAttribute("value", city);
+        _option.innerText = city;
+        select_city.append(_option);
     }
 }
 
-function setCity(index) {
-    city = cities[index].name;
-    latitude = cities[index].latitude;
-    longitude = cities[index].longitude;
-    timezone = cities[index].timezone;
-}
-
-function addCity(name, selected = false, ADD = false) {
-    const Option = document.createElement("option");
-    Option.setAttribute("value", name);
-    Option.innerText = name;
-
-    select_city.append(Option);
+function addCity(selected = false, ADD = false) {
+    if (!cities.has(city)) {
+        cities.set(city, { latitude: latitude, longitude: longitude, timezone: timezone });
+        const _option = document.createElement("option");
+        _option.setAttribute("value", city);
+        _option.innerText = city;
+        select_city.append(_option);
+    }
     if (selected) {
-        select_city.value = name;
+        select_city.value = city;
     }
 }
 
@@ -275,13 +272,10 @@ select_city.addEventListener(
     "change",
     async function () {
         if (this.value != city) {
-            let index = 0;
-            for (; index < cities.length; index++) {
-                if (this.value == cities[index].name) break;
-            }
-            setCity(index);
-            console.log(city);
-
+            city = this.value;
+            latitude = cities.get(this.value).latitude;
+            longitude = cities.get(this.value).longitude;
+            timezone = cities.get(this.value).timezone;
             //перерисовать страницу
             panel.classList.add("visually-hidden");
             container.innerHTML = "";
@@ -298,7 +292,7 @@ select_city.addEventListener(
 
 loading.innerHTML = spinnerInTable;
 fillCites();
-setCity(0);
+
 await getAllWeather();
 
 navigator.geolocation.getCurrentPosition(await success, error);
