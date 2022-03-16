@@ -17,7 +17,7 @@ namespace NonLisbonProject.Services
 
             var links = new List<string>();
             string path = filename + ".txt";
-            
+
             if (File.Exists(path))
             {
                 // асинхронное чтение
@@ -25,11 +25,15 @@ namespace NonLisbonProject.Services
                 var fileText = await File.ReadAllLinesAsync(path, Encoding.UTF8);
                 //прочитать этот файл и закинуть все в links
                 links = fileText.ToList();
-                
+
             }
             
             //удалить файл, который создал питон файл
-            File.Delete(path);
+            
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
             return links;
         }
 
@@ -56,11 +60,14 @@ namespace NonLisbonProject.Services
             }
 
             //удалить файл, который создал питон файл
-            File.Delete(path);
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
             return links;
         }
 
-        private static void Run_Py_Script(string filename)
+        private static async void Run_Py_Script(string filename)
         {
             // 1) Create Process Info
             var psi = new ProcessStartInfo();
@@ -79,7 +86,10 @@ namespace NonLisbonProject.Services
             psi.RedirectStandardOutput = true;
             psi.RedirectStandardError = true;
 
-            Process.Start(psi);
+            Process.Start(psi).WaitForExit(10000);
+            
+            
+
         }
     }
 

@@ -3,7 +3,7 @@
 // сделать переменную, куда запишется массив "ссылок"
 // вывести в console.log
 import api from "/utils/api.js";
-var city = "Москва";
+var city = "moskow";
 var timezone = 3;
 var latitude = 55.7504461;
 var longitude = 37.6174943;
