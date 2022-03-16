@@ -10,9 +10,6 @@ namespace NonLisbonProject.Services
 {
     public static class InstagramService
     {
-        const string pathPython1 = @"C:\Users\IK\miniconda3\python.exe";
-        const string pathPython2 = @"";
-
         public static async Task<List<string>> GetLinks(string filename)
         {
             //запустить питоновский скрипт
@@ -68,7 +65,7 @@ namespace NonLisbonProject.Services
             // 1) Create Process Info
             var psi = new ProcessStartInfo();
             //Путь к питону
-            psi.FileName = pathPython1;
+            psi.FileName = Program.pathPython;
 
             // 2) Provide script and arguments
             //Путь к скрипту, только файлы py, русские символы в сылке не читает
