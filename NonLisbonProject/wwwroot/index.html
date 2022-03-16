@@ -20,19 +20,16 @@
 <body>
     <my-header value="NonLisbon"></my-header>
     <main class="my-3">
-        <div class="container-fluid  px-5">
+        <div class="container-fluid px-5">
             <div id="loading"></div>
             <div class="d-flex justify-content-center mb-1 gap-1" id="find_panel">
                 <div class="col">
                     <select class="form-select" aria-label="Default select example" id="select_city"></select>
                 </div>
-                <button class="btn btn-primary text-center col" type="button">Подобрать
-                    образ
-                    для
-                    путешествия</button>
+                <button class="btn btn-primary text-center flex-box col ms-1" type="button">Подобрать образ для путешествия</button>
             </div>
 
-            <div class="wrapper gap-1" id="main_container">
+            <div class="wrapper" id="main_container">
                 <template id="main_card">
                     <div class="card text-dark bg-light">
                         <div class="card-body">
