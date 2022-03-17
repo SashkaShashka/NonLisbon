@@ -10,10 +10,10 @@ namespace NonLisbonProject.Services
 {
     public static class InstagramService
     {
-        public static async Task<List<string>> GetLinks(string filename)
+        public static async Task<List<string>> GetLinks(string filename, int count)
         {
             //запустить питоновский скрипт
-            Run_Py_Script(filename);
+            Run_Py_Script(filename, count);
 
             var links = new List<string>();
             string path = filename + ".txt";
@@ -37,37 +37,7 @@ namespace NonLisbonProject.Services
             return links;
         }
 
-        public static async Task<List<string>> GetCountLinks(string filename, int count)
-        {
-            //запустить питоновский скрипт
-            Run_Py_Script(filename);
-
-            var links = new List<string>();
-            string path = filename + ".txt";
-
-            if (File.Exists(path))
-            {
-                // асинхронное чтение
-                StreamReader sr = new StreamReader(path);
-                int counter = 0;
-
-                while (!sr.EndOfStream && counter++ < count)
-                {
-                    links.Add(sr.ReadLine());
-                    
-                }
-                sr.Close();
-            }
-
-            //удалить файл, который создал питон файл
-            if (File.Exists(path))
-            {
-                File.Delete(path);
-            }
-            return links;
-        }
-
-        private static async void Run_Py_Script(string filename)
+        private static async void Run_Py_Script(string filename, int count)
         {
             // 1) Create Process Info
             var psi = new ProcessStartInfo();
@@ -78,7 +48,7 @@ namespace NonLisbonProject.Services
             //Путь к скрипту, только файлы py, русские символы в сылке не читает
             var script = @"InstagramRequest.py";
 
-            psi.Arguments = $"\"{script}\" \"{filename}\" ";
+            psi.Arguments = $"\"{script}\" \"{filename}\" \"{count}\"";
 
             // 3) Process configuration
             psi.UseShellExecute = false;
@@ -86,7 +56,7 @@ namespace NonLisbonProject.Services
             psi.RedirectStandardOutput = true;
             psi.RedirectStandardError = true;
 
-            Process.Start(psi).WaitForExit(10000);
+            Process.Start(psi).WaitForExit();
             
             
 

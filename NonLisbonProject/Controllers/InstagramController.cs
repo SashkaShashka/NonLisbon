@@ -17,20 +17,10 @@ namespace NonLisbonProject.Controllers
     {
 
         // GET: api/<InstagramController>
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<string>>> GetAsync(string filename)
-        {
-            var links = await InstagramService.GetLinks(filename);
-            Console.WriteLine("Сделал");
-
-            return Ok(links);
-        }
-
-        // GET: api/<InstagramController>
         [HttpGet("{count}")]
-        public async Task<ActionResult<IEnumerable<string>>> GetCountAsync(int count, string filename)
+        public async Task<ActionResult<IEnumerable<string>>> GetAsync(int count, string filename)
         {
-            var links = await InstagramService.GetCountLinks(filename, count);
+            var links = await InstagramService.GetLinks(filename, count);
             Console.WriteLine("Сделал");
 
             return Ok(links);
