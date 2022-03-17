@@ -6,16 +6,20 @@ import string
 filename = sys.argv[1]
 count = sys.argv[2]
 
-def generate_random_string(length):
-    letters = string.ascii_lowercase
-    rand_string = ''.join(random.choice(letters) for i in range(length))
-    return rand_string
+def get_links(my_file, count):
+	location = InstagramLocation('212988663', 'new-york-new-york')
+	i=0
+	for post in location.top_posts:
+		i+=1
+		try:
+			my_file.write(post.display_url+"\n")
+			if i>count:
+				break
+		except:
+			pass
 
 filename += ".txt"
 
-count_string = random.randrange(10, 50)
 my_file = open(filename, "w+")
-for i in range(count_string):
-    count_letters = random.randrange(10, 50)
-    my_file.write(generate_random_string(count_letters)+"\n")
+get_links(my_file, count)
 my_file.close()
