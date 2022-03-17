@@ -4,6 +4,7 @@ import random
 import string
 
 filename = sys.argv[1]
+count = sys.argv[2]
 
 def generate_random_string(length):
     letters = string.ascii_lowercase
