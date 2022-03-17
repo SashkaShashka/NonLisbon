@@ -23,7 +23,7 @@ namespace NonLisbonProject
                 ).FullName
                 ).FullName
                 );
-            if (path.Name != "source")
+            if (path.Name != "source" && path.Name != "Source")
                 throw new DirectoryNotFoundException();
             else
                 pathPython = Directory.GetParent(path.FullName).FullName + "\\miniconda3\\python.exe";

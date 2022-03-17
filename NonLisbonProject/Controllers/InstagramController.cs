@@ -20,6 +20,7 @@ namespace NonLisbonProject.Controllers
         [HttpGet("{count}")]
         public async Task<ActionResult<IEnumerable<string>>> GetAsync(int count, string filename)
         {
+            Console.WriteLine("Count: " + count + " filename: " + filename);
             var links = await InstagramService.GetLinks(filename, count);
             Console.WriteLine("Сделал");
 

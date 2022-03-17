@@ -21,18 +21,20 @@ namespace NonLisbonProject.Services
             if (File.Exists(path))
             {
                 // асинхронное чтение
-
+                Console.WriteLine("Нашёл файл");
                 var fileText = await File.ReadAllLinesAsync(path, Encoding.UTF8);
                 //прочитать этот файл и закинуть все в links
-                links = fileText.ToList();
 
+                links = fileText.ToList();
+                
             }
             
             //удалить файл, который создал питон файл
             
             if (File.Exists(path))
             {
-                File.Delete(path);
+                Console.WriteLine("Удаляю");
+                //File.Delete(path);
             }
             return links;
         }
@@ -56,9 +58,23 @@ namespace NonLisbonProject.Services
             psi.RedirectStandardOutput = true;
             psi.RedirectStandardError = true;
 
-            Process.Start(psi).WaitForExit();
-            
-            
+            // 4) Execute process and get output
+            var errors = "";
+            var results = "";
+
+            //Process.Start(psi).WaitForExit();
+            using (var process = Process.Start(psi))
+            {
+                errors = process.StandardError.ReadToEnd();
+                results = process.StandardOutput.ReadToEnd();
+            }
+
+            // 5) Display output
+            Console.WriteLine("ERRORS:");
+            Console.WriteLine(errors);
+            Console.WriteLine();
+            Console.WriteLine("Results:");
+            Console.WriteLine(results);
 
         }
     }
