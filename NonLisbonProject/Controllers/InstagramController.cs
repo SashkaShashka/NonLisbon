@@ -21,7 +21,6 @@ namespace NonLisbonProject.Controllers
         public async Task<ActionResult> GetAsync(int count, string filename)
         {
             await InstagramService.GetImages(filename, count);
-
             return Ok();
         }
 

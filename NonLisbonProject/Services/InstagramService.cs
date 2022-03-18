@@ -14,15 +14,8 @@ namespace NonLisbonProject.Services
         {
             //запустить питоновский скрипт
             Run_Py_Script(filename, count);
-            string path = filename + ".txt";
+
             
-            //удалить файл, который создал питон файл
-            
-            //if (File.Exists(path))
-            //{
-            //    Console.WriteLine("Удаляю");
-            //    //File.Delete(path);
-            //}
         }
 
         private static async void Run_Py_Script(string filename, int count)
@@ -35,8 +28,7 @@ namespace NonLisbonProject.Services
 
                 // 2) Provide script and arguments
                 //Путь к скрипту, только файлы py, русские символы в сылке не читает
-
-                Arguments = $"\"{filename}\" \"{count}\"",
+                Arguments = $" \"{filename}\" \"{count}\"",
 
                 // 3) Process configuration
                 UseShellExecute = false,
