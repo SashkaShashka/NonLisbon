@@ -18,13 +18,11 @@ namespace NonLisbonProject.Controllers
 
         // GET: api/<InstagramController>
         [HttpGet("{count}")]
-        public async Task<ActionResult<IEnumerable<string>>> GetAsync(int count, string filename)
+        public async Task<ActionResult> GetAsync(int count, string filename)
         {
-            Console.WriteLine("Count: " + count + " filename: " + filename);
-            var links = await InstagramService.GetLinks(filename, count);
-            Console.WriteLine("Сделал");
+            await InstagramService.GetImages(filename, count);
 
-            return Ok(links);
+            return Ok();
         }
 
         //может быть мы будем использовать пост запросы, хз для чего

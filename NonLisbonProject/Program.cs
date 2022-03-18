@@ -12,22 +12,6 @@ namespace NonLisbonProject
 {
     public class Program
     {
-        public static string pathPython;
-        //вычисление пути к интерпритору python
-        static Program()
-        {
-            var path = Directory.GetParent(
-                Directory.GetParent(
-                Directory.GetParent(
-                Directory.GetCurrentDirectory()
-                ).FullName
-                ).FullName
-                );
-            if (path.Name != "source" && path.Name != "Source")
-                throw new DirectoryNotFoundException();
-            else
-                pathPython = Directory.GetParent(path.FullName).FullName + "\\miniconda3\\python.exe";
-        }
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();

@@ -10,53 +10,40 @@ namespace NonLisbonProject.Services
 {
     public static class InstagramService
     {
-        public static async Task<List<string>> GetLinks(string filename, int count)
+        public static async Task GetImages(string filename, int count)
         {
             //запустить питоновский скрипт
             Run_Py_Script(filename, count);
-
-            var links = new List<string>();
             string path = filename + ".txt";
-
-            if (File.Exists(path))
-            {
-                // асинхронное чтение
-                Console.WriteLine("Нашёл файл");
-                var fileText = await File.ReadAllLinesAsync(path, Encoding.UTF8);
-                //прочитать этот файл и закинуть все в links
-
-                links = fileText.ToList();
-                
-            }
             
             //удалить файл, который создал питон файл
             
-            if (File.Exists(path))
-            {
-                Console.WriteLine("Удаляю");
-                //File.Delete(path);
-            }
-            return links;
+            //if (File.Exists(path))
+            //{
+            //    Console.WriteLine("Удаляю");
+            //    //File.Delete(path);
+            //}
         }
 
         private static async void Run_Py_Script(string filename, int count)
         {
             // 1) Create Process Info
-            var psi = new ProcessStartInfo();
-            //Путь к питону
-            psi.FileName = Program.pathPython;
+            var psi = new ProcessStartInfo
+            {
+                //Путь к питону
+                FileName = "InstagramRequest.exe",
 
-            // 2) Provide script and arguments
-            //Путь к скрипту, только файлы py, русские символы в сылке не читает
-            var script = @"InstagramRequest.py";
+                // 2) Provide script and arguments
+                //Путь к скрипту, только файлы py, русские символы в сылке не читает
 
-            psi.Arguments = $"\"{script}\" \"{filename}\" \"{count}\"";
+                Arguments = $"\"{filename}\" \"{count}\"",
 
-            // 3) Process configuration
-            psi.UseShellExecute = false;
-            psi.CreateNoWindow = true;
-            psi.RedirectStandardOutput = true;
-            psi.RedirectStandardError = true;
+                // 3) Process configuration
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true
+            };
 
             // 4) Execute process and get output
             var errors = "";

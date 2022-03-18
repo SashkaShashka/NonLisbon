@@ -1,0 +1,32 @@
+* {
+    /* Шрифт по умолчанию */
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    /* Включать ширину рамки в размер блока.
+       Иначе при наличии рамки блоки будут "вылезать" в стороны. */
+    box-sizing: border-box;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    font-size: smaller;
+}
+
+.height-image {
+    max-height: 80vh;
+}
+.color_datetime {
+    color: white;
+    font-size: medium;
+}
+.font-style-spinner {
+    width: 5rem;
+    height: 5rem;
+}
