@@ -9,6 +9,10 @@
     <Folder Include="wwwroot\header\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="IronPython" Version="2.7.12" />
+  </ItemGroup>
+
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptJSXEmit>React</TypeScriptJSXEmit>

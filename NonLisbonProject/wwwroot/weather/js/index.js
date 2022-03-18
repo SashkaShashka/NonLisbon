@@ -44,15 +44,10 @@ function getWeathersRequest() {
 function getWeatherRequestToday(preDay = false) {
     var workDate = new Date();
     workDate.setHours(workDate.getHours() - 2);
-    console.log("Разница " + workDate.getTimezoneOffset() + " " + timezone * 60);
     if (preDay) {
         workDate.setDate(workDate.getDate() - 1);
-        console.log("По идее ночь предыдущего дня:" + workDate);
-    } else {
-        console.log("По идее ночь сегодняшнего дня:" + workDate);
     }
     workDate = Math.floor(workDate.getTime() / 1000);
-    console.log(workDate);
 
     return api.get(
         "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=" +
@@ -71,10 +66,7 @@ async function success(pos) {
     var crd = pos.coords;
     latitude = crd.latitude;
     longitude = crd.longitude;
-    console.log(latitude);
-    console.log(longitude);
     city = (await getCoordinate())[0].local_names.ru;
-    console.log(city);
 
     // перерисовать страницу
     panel.classList.add("visually-hidden");
@@ -99,12 +91,8 @@ function error(err) {
     console.log("error");
 }
 function findIndexNow() {
-    console.log("Дата сейчас, прямо сейчас: " + date);
-    console.log("timezone:" + timezone);
     date.setUTCHours(0, 0, 0, 0);
-    console.log("Дата сегодня полночь date: " + date);
     var helpTime = (date.getTime() - Math.round(timezone) * 3600 * 1000) / 1000;
-    console.log("Дата сегодня полночь helpTime: " + helpTime);
     for (let index = 0; index < weatherToday.length; index++) {
         if (weatherToday[index].dt == helpTime) {
             return index;
@@ -140,9 +128,6 @@ function fillCard(card, indexDay, main = false) {
     }
     if (!main) {
         var weatherOfDay = weathers[indexTomorrow];
-        //console.log(weathers);
-        //console.log(weatherOfDay);
-        //console.log(indexTomorrow);
         card.querySelector("#degrees").innerHTML = Math.round(weatherOfDay.temp.day) + "&deg";
         card.querySelector("#icon_weather").setAttribute("src", "http://openweathermap.org/img/wn/" + weatherOfDay.weather[0].icon + "@2x.png");
         var description = weatherOfDay.weather[0].description;
@@ -160,7 +145,6 @@ function fillCard(card, indexDay, main = false) {
         card.querySelector("#wind").innerHTML = weatherNow.wind_speed.toFixed(1) + " м/с, " + directionByDergees(weatherNow.wind_deg);
         card.querySelector("#water").innerHTML = weatherNow.humidity + "%";
         var indexToday = findIndexNow();
-        console.log(indexToday);
         card.querySelector("#morning").lastElementChild.innerHTML = Math.round(weatherToday[indexToday + 6].temp) + "&deg";
         card.querySelector("#morning")
             .querySelector("#img")
@@ -196,39 +180,26 @@ async function getAllWeather() {
     weathers = [];
     weatherToday = [];
     var helpObject = await getWeathersRequest();
-    console.log(helpObject);
     timezone = helpObject.timezone_offset / 3600;
-    console.log("timezone: " + timezone);
     // заполнили вчера
     for (const iterator of (await getWeatherRequestToday(true)).hourly) {
         weatherToday.push(iterator);
     }
-    console.log(weatherToday);
-    console.log("Сегодня");
     // заполнили сегодня прошеднее
     for (const iterator of (await getWeatherRequestToday()).hourly) {
         weatherToday.push(iterator);
-        console.log(iterator);
     }
     weatherToday.pop();
-    console.log("До конца дня");
     //заполнили до конца дня+
     for (const iterator of helpObject.hourly) {
         weatherToday.push(iterator);
-        console.log(iterator);
     }
-    console.log("Закончили");
     // запомнили сейчас
     weatherNow = helpObject.current;
     // заполнили на все дни
     for (const iterator of helpObject.daily) {
         weathers.push(iterator);
-    }
-    console.log(weatherToday);
-    var inn = 0;
-    weatherToday.forEach((element) => {
-        console.log(inn++ + "   " + new Date(element.dt * 1000));
-    });
+    };
 }
 
 function fillCites() {
