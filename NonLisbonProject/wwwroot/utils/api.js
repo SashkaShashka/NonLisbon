@@ -27,12 +27,18 @@ export async function apiRequest(path, method = "GET", body) {
   const response = await fetch(path);
   if (!response.ok) {
     const errorMessage = (await response.text()) || response.statusText;
-    console.error(errorMessage);
-    throw new HttpStatusError(errorMessage, response.status);
+    if(response.status == 503){
+      return false
+    }
+    else{
+      console.error(errorMessage);
+      throw new HttpStatusError(errorMessage, response.status);
+    }
   }
   try {
     return await response.json();
   } catch {
+    
     return null;
   }
 }

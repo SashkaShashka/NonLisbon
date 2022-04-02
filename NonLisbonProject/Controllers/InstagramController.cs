@@ -20,8 +20,13 @@ namespace NonLisbonProject.Controllers
         [HttpGet("{count}")]
         public async Task<ActionResult> GetAsync(int count, string filename)
         {
-            await InstagramService.GetImages(filename, count);
-            return Ok();
+            if (await InstagramService.GetImages(filename, count)) {
+                return Ok();
+            }
+            else {
+                return StatusCode(503);
+            }
+
         }
 
         //может быть мы будем использовать пост запросы, хз для чего
