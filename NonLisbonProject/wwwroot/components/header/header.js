@@ -57,14 +57,6 @@ export class SuperAuthHeader extends HTMLElement {
 
         headNav.append(li1);
 
-        const li2 = li.cloneNode(true);
-        li2.firstChild.innerText = "Одеться в путешествие";
-        li2.firstChild.setAttribute("href", "/travel/index.html");
-        if (page === "travel") {
-            li2.firstChild.classList.add("active");
-        }
-
-        headNav.append(li2);
 
         const li3 = li.cloneNode(true);
         li3.firstChild.innerText = "Окно в город";
