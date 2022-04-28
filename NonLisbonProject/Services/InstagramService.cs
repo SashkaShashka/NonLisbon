@@ -10,15 +10,15 @@ namespace NonLisbonProject.Services
 {
     public static class InstagramService
     {
-        public static async Task<bool> GetImages(string filename, int count)
+        public static async Task<bool> GetImages(string filename, int count, string id, string nameInst)
         {
             //запустить питоновский скрипт
-            return await Run_Py_Script(filename, count);
+            return await Run_Py_Script(filename, count, id, nameInst);
 
             
         }
 
-        private static async Task<bool> Run_Py_Script(string filename, int count)
+        private static async Task<bool> Run_Py_Script(string filename, int count, string id, string nameInst)
         {
             // 1) Create Process Info
             var psi = new ProcessStartInfo
@@ -28,7 +28,7 @@ namespace NonLisbonProject.Services
 
                 // 2) Provide script and arguments
                 //Путь к скрипту, только файлы py, русские символы в сылке не читает
-                Arguments = $" \"{filename}\" \"{count}\"",
+                Arguments = $" \"{filename}\" \"{count}\" \"{id}\" \"{nameInst}\"",
 
                 // 3) Process configuration
                 UseShellExecute = false,
