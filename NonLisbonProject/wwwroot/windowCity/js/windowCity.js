@@ -1,19 +1,62 @@
 import api from "/utils/api.js";
 var city = "Москва";
-var timezone = 3;
-var latitude = 55.7504461;
-var longitude = 37.6174943;
-let indexTomorrow = 1;
+var id = 17326249;
+var nameInst = "moscow-russia";
 
-function getInstagramRequest() {
-    return api.get("https://localhost:5001/api/instagram/10?filename=images");
+var defaultCities = [
+    { name: "Москва", id: "17326249", nameInst: "moscow-russia" },
+    { name: "Дели", id: "215141266", nameInst: "delhi" },
+    { name: "Нью-Йорк", id: "486560663", nameInst: "new-york-city-ny" },
+    { name: "Лондон", id: "213385402", nameInst: "london" },
+    { name: "Париж", id: "101870431224971", nameInst: "paris-france" },
+    { name: "Токио", id: "104373574421310", nameInst: "tokyo-japan" },
+    { name: "Мадрид", id: "127963847", nameInst: "madrid" },
+    { name: "Рим", id: "31499759", nameInst: "rome" },
+    { name: "Сидней", id: "213011753", nameInst: "sydney" },
+];
+var cities = new Map();
+for (var _city of defaultCities) {
+    cities.set(_city.name, { id: _city.id, nameInst: _city.nameInst });
 }
-async function getPhoto() {
-    var ans = await getInstagramRequest();
+
+function fillCites() {
+    select_city.innerHTML = "";
+    for (var city of cities.keys()) {
+        const _option = document.createElement("option");
+        _option.setAttribute("value", city);
+        _option.innerText = city;
+        select_city.append(_option);
+    }
+}
+
+function getInstagramRequest(id, nameInst) {
+    return api.get("https://localhost:5001/api/instagram/100?filename=images?id="+
+    id +
+    "?nameInst="+
+    nameInst
+    );
+}
+async function getPhoto(id, nameInst) {
+    var ans = await getInstagramRequest(id, nameInst);
     if (ans == false){
         console.error("Ошибка " + 503)
         alert.innerHTML = Alert;
         return false;
+    }
+    else {
+        var first = true;
+        for (let index = 0; index < 10; index++) {
+            let carouselItem = templateCarousel.content.cloneNode(true);
+            console.log(carouselItem);
+            carouselItem.querySelector("#image").setAttribute("src", "/images/" + index + ".jpg");
+    
+            if (first) {
+                carouselItem.lastElementChild.classList.add("active");
+                first = false;
+            }
+            carousel.append(carouselItem);
+        }
+        panel.classList.remove("visually-hidden");
     }
     return true;
 }
@@ -40,25 +83,38 @@ const carousel = document.querySelector("#carousel");
 const panel = document.querySelector("#main_panel");
 const templateCarousel = document.querySelector("#carousel_item");
 const alert = document.querySelector("#alert");
+const select_city = document.querySelector("#select_city");
 
 panel.classList.add("visually-hidden");
 loading.innerHTML = spinnerInTable;
+fillCites();
 
-var check = await getPhoto();
-var first = true;
-if (check){
-    for (let index = 0; index < 10; index++) {
-        let carouselItem = templateCarousel.content.cloneNode(true);
-        console.log(carouselItem);
-        carouselItem.querySelector("#image").setAttribute("src", "/images/" + index + ".jpg");
+select_city.addEventListener(
+    "change",
+    async function () {
+        if (this.value != city) {
+            city = this.value;
+            id = cities.get(this.value).id;
+            nameInst = cities.get(this.value).nameInst;
+            console.log(city);
+            console.log(id);
+            console.log(nameInst);
+            //перерисовать страницу
+            panel.classList.add("visually-hidden");
+            carousel.innerHTML = "";
+            loading.innerHTML = spinnerInTable;
 
-        if (first) {
-            carouselItem.lastElementChild.classList.add("active");
-            first = false;
+            //var check = await getPhoto(id, nameInst);
+            
+            loading.innerHTML = "";
+            panel.classList.remove("visually-hidden");
+            
         }
-        carousel.append(carouselItem);
-    }
-    panel.classList.remove("visually-hidden");
-}
+    },
+    false
+);
+
+//var check = await getPhoto(id, nameInst);
+
 loading.innerHTML = "";
 

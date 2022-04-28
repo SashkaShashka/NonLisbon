@@ -18,9 +18,9 @@ namespace NonLisbonProject.Controllers
 
         // GET: api/<InstagramController>
         [HttpGet("{count}")]
-        public async Task<ActionResult> GetAsync(int count, string filename)
+        public async Task<ActionResult> GetAsync(int count, string filename, string id, string nameInst)
         {
-            if (await InstagramService.GetImages(filename, count)) {
+            if (await InstagramService.GetImages(filename, count, id, nameInst)) {
                 return Ok();
             }
             else {

@@ -31,12 +31,12 @@
             <div class = "d-flex justify-content-center" id="alert"></div>
             <div id="loading"></div>
             <div id="main_panel">
-                <select class="form-select form-select-color mb-1 " aria-label="Default select example">
-                    <option selected>Выбор города</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
+                <div class="d-flex justify-content-center mb-1 gap-1" id="find_panel">
+                    <div class="col">
+                        <select class="form-select" aria-label="Default select example" id="select_city"></select>
+                    </div>
+                    <button class="btn btn-primary text-center flex-box col ms-1" type="button">Погода в городе</button>
+                </div>
                 <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
                     <div class="carousel-inner" id="carousel"></div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
