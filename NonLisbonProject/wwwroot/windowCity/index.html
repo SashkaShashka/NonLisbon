@@ -35,7 +35,8 @@
                     <div class="col">
                         <select class="form-select" aria-label="Default select example" id="select_city"></select>
                     </div>
-                    <button class="btn btn-primary text-center flex-box col ms-1" type="button">Погода в городе</button>
+                    <a class="btn btn-primary text-center flex-box col ms-1" id="buttonCity" type="button"
+                        href="../index.html?city=">Погода в городе</a>
                 </div>
                 <div class="wrapper height-image">
                     <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
@@ -52,16 +53,17 @@
                         </button>
                     </div>
                     <div class="card" style="margin-left: 2%">
-                        <h5 class="card-header">Наши рекомендации</h5>
+                        <h5 class="card-header" style="font-size: 24px;">Наши рекомендации для вас</h5>
                         <div class="card-body">
-                            <h5 class="card-title" id="prediction">Text prediction.</h5>
+                            <p class="card-title" id="prediction" align="justify" style="font-size: 20px;">Text
+                                prediction</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <template id="carousel_item">
-                <div class="carousel-item text-center">
+                <div class="carousel-item text-center" style="min-height: 75vh;">
                     <img class="img-fluid height-image " src="" id="image" class="d-block w-100">
                 </div>
             </template>

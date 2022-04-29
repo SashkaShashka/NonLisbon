@@ -31,7 +31,7 @@ namespace NonLisbonProject.Services
         static readonly HashSet<string> UpTempThreePart = new HashSet<string>(new string[] { "футболка", "майка", "жилетка", "кофта", "ветровка", "худи", "водоласка", "платье", "рубашка", "блузка" });
         static readonly HashSet<string> DownTempThreePart = new HashSet<string>(new string[] { "джинсы", "спортивные штаны", "брюки", "колготки" });
         static readonly HashSet<string> UpTempFourPart = new HashSet<string>(new string[] { "футболка", "майка", "платье", "топик", "рубашка", "блузка" });
-        static readonly HashSet<string> DownTempFourPart = new HashSet<string>(new string[] { "брюки", "колготки", "юбка", "шорты" });
+        static readonly HashSet<string> DownTempFourPart = new HashSet<string>(new string[] { "брюки", "юбка", "шорты" });
 
         static readonly List<Template> templates = new List<Template>(CreateMock.GetMockDataTemplates());
 
