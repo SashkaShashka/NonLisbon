@@ -37,12 +37,12 @@ function fillCites() {
 function getInstagramRequest(id, nameInst) {
     return api.get("https://localhost:5001/api/instagram/100?filename=images?id="+
     id +
-    "?nameInst="+
+    "&nameInst="+
     nameInst
     );
 }
 
-function getWeathersRequest() {
+function getWeatherRequest() {
     return api.get(
         "https://api.openweathermap.org/data/2.5/onecall?lat=" +
             latitude +
@@ -54,9 +54,22 @@ function getWeathersRequest() {
             "&units=metric&lang=ru"
     );
 }
+
+function getClothesRequest() {
+    return api.get(
+        "https://localhost:5001/api/clothes/city=" +
+            city +
+            "&weatherId=" +
+            weatherNow.weather.id +
+            "&temperature" +
+            weatherNow.temp
+    );
+}
+
+
 async function getWeatherNow() {
     
-    var helpObject = await getWeathersRequest();
+    var helpObject = await getWeatherRequest();
     // запомнили сейчас
     weatherNow = helpObject.current;
     console.log(weatherNow);
