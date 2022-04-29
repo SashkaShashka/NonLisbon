@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 
@@ -27,6 +28,11 @@ namespace NonLisbonProject.Controllers
                 return StatusCode(503);
             }
 
+        }
+        [HttpGet()]
+        public string GetCountImages(string city)
+        {
+            return JsonSerializer.Serialize<int>(InstagramService.GetCountImages(city));
         }
 
         //может быть мы будем использовать пост запросы, хз для чего
