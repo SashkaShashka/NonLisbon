@@ -1,22 +1,27 @@
 import api from "/utils/api.js";
+
+const KeyAPI = "8e60906d7c520861f76a479b2765c285";
 var city = "Москва";
 var id = 17326249;
 var nameInst = "moscow-russia";
+var latitude = 55.7504461;
+var longitude = 37.6174943;
+let weatherNow = {};
 
 var defaultCities = [
-    { name: "Москва", id: "17326249", nameInst: "moscow-russia" },
-    { name: "Дели", id: "215141266", nameInst: "delhi" },
-    { name: "Нью-Йорк", id: "486560663", nameInst: "new-york-city-ny" },
-    { name: "Лондон", id: "213385402", nameInst: "london" },
-    { name: "Париж", id: "101870431224971", nameInst: "paris-france" },
-    { name: "Токио", id: "104373574421310", nameInst: "tokyo-japan" },
-    { name: "Мадрид", id: "127963847", nameInst: "madrid" },
-    { name: "Рим", id: "31499759", nameInst: "rome" },
-    { name: "Сидней", id: "213011753", nameInst: "sydney" },
+    { name: "Москва", id: "17326249", nameInst: "moscow-russia", latitude: 55.7504461, longitude: 37.6174943 },
+    { name: "Дели", id: "215141266", nameInst: "delhi-india", latitude: 28.6517178, longitude: 77.2219388 },
+    { name: "Нью-Йорк", id: "486560663", nameInst: "new-york-city-ny", latitude: 40.7127281, longitude: -74.0060152},
+    { name: "Лондон", id: "213385402", nameInst: "london", latitude: 51.5073219, longitude: -0.1276474 },
+    { name: "Париж", id: "101870431224971", nameInst: "paris-france", latitude: 48.8588897, longitude: 2.3200410217200766 },
+    { name: "Токио", id: "104373574421310", nameInst: "tokyo-japan", latitude: 35.6828387, longitude: 139.7594549 },
+    { name: "Мадрид", id: "127963847", nameInst: "madrid", latitude: 40.4167047, longitude: -3.7035825 },
+    { name: "Рим", id: "31499759", nameInst: "rome", latitude: 41.8933203, longitude: 12.4829321 },
+    { name: "Сидней", id: "213011753", nameInst: "sydney", latitude: -33.768528, longitude: 150.9568559523945 },
 ];
 var cities = new Map();
 for (var _city of defaultCities) {
-    cities.set(_city.name, { id: _city.id, nameInst: _city.nameInst });
+    cities.set(_city.name, { id: _city.id, nameInst: _city.nameInst, latitude: _city.latitude, longitude: _city.longitude });
 }
 
 function fillCites() {
@@ -32,9 +37,43 @@ function fillCites() {
 function getInstagramRequest(id, nameInst) {
     return api.get("https://localhost:5001/api/instagram/100?filename=images?id="+
     id +
-    "?nameInst="+
+    "&nameInst="+
     nameInst
     );
+}
+
+function getWeatherRequest() {
+    return api.get(
+        "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+            latitude +
+            "&lon=" +
+            longitude +
+            "&appid=" +
+            KeyAPI +
+            "&exclude=minutely,alerts,hourly,daily" +
+            "&units=metric&lang=ru"
+    );
+}
+
+function getClothesRequest() {
+    return api.get(
+        "https://localhost:5001/api/clothes/city=" +
+            city +
+            "&weatherId=" +
+            weatherNow.weather.id +
+            "&temperature" +
+            weatherNow.temp
+    );
+}
+
+
+async function getWeatherNow() {
+    
+    var helpObject = await getWeatherRequest();
+    // запомнили сейчас
+    weatherNow = helpObject.current;
+    console.log(weatherNow);
+   
 }
 async function getPhoto(id, nameInst) {
     var ans = await getInstagramRequest(id, nameInst);
@@ -96,13 +135,14 @@ select_city.addEventListener(
             city = this.value;
             id = cities.get(this.value).id;
             nameInst = cities.get(this.value).nameInst;
-            console.log(city);
-            console.log(id);
-            console.log(nameInst);
+            latitude = cities.get(this.value).latitude;
+            longitude = cities.get(this.value).longitude;
+            
             //перерисовать страницу
             panel.classList.add("visually-hidden");
             carousel.innerHTML = "";
             loading.innerHTML = spinnerInTable;
+            await getWeatherNow();
 
             //var check = await getPhoto(id, nameInst);
             
@@ -114,7 +154,8 @@ select_city.addEventListener(
     false
 );
 
+await getWeatherNow();
 //var check = await getPhoto(id, nameInst);
-
+panel.classList.remove("visually-hidden");
 loading.innerHTML = "";
 
