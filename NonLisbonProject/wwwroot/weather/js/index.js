@@ -1,8 +1,9 @@
 import api from "/utils/api.js";
 import { getNowTime, _getMonth } from "../../utils/time_reader.js";
-const KeyAPI = "8e60906d7c520861f76a479b2765c285";
+const KeyAPI = "14ad920bb45256b5fdd0f59c75dbd86c";
 var date = {};
 var city = "Москва";
+var nameEng = "Moscow";
 var timezone = 3;
 var latitude = 55.7504461;
 var longitude = 37.6174943;
@@ -12,19 +13,19 @@ let weatherToday = [];
 let indexTomorrow = 1;
 
 var defaultCities = [
-    { name: "Москва", latitude: 55.7504461, longitude: 37.6174943, timezone: 3 },
-    { name: "Дели", latitude: 28.6517178, longitude: 77.2219388, timezone: 5.5 },
-    { name: "Нью-Йорк", latitude: 40.7127281, longitude: -74.0060152, timezone: -5 },
-    { name: "Лондон", latitude: 51.5073219, longitude: -0.1276474, timezone: 0 },
-    { name: "Париж", latitude: 48.8588897, longitude: 2.3200410217200766, timezone: 1 },
-    { name: "Токио", latitude: 35.6828387, longitude: 139.7594549, timezone: 9 },
-    { name: "Мадрид", latitude: 40.4167047, longitude: -3.7035825, timezone: 1 },
-    { name: "Рим", latitude: 41.8933203, longitude: 12.4829321, timezone: 1 },
-    { name: "Сидней", latitude: -33.768528, longitude: 150.9568559523945, timezone: 11 },
+    { name: "Москва", nameEng: "Moscow", latitude: 55.7504461, longitude: 37.6174943, timezone: 3 },
+    { name: "Дели", nameEng: "Deli", latitude: 28.6517178, longitude: 77.2219388, timezone: 5.5 },
+    { name: "Нью-Йорк", nameEng: "NewYork", latitude: 40.7127281, longitude: -74.0060152, timezone: -5 },
+    { name: "Лондон", nameEng: "London", latitude: 51.5073219, longitude: -0.1276474, timezone: 0 },
+    { name: "Париж", nameEng: "Paris", latitude: 48.8588897, longitude: 2.3200410217200766, timezone: 1 },
+    { name: "Токио", nameEng: "Tokyo", latitude: 35.6828387, longitude: 139.7594549, timezone: 9 },
+    { name: "Мадрид", nameEng: "Madrid", latitude: 40.4167047, longitude: -3.7035825, timezone: 1 },
+    { name: "Рим", nameEng: "Rome", latitude: 41.8933203, longitude: 12.4829321, timezone: 1 },
+    { name: "Сидней", nameEng: "Sydney", latitude: -33.768528, longitude: 150.9568559523945, timezone: 11 },
 ];
 var cities = new Map();
 for (var _city of defaultCities) {
-    cities.set(_city.name, { latitude: _city.latitude, longitude: _city.longitude, timezone: _city.timezone });
+    cities.set(_city.name, { nameEng: _city.nameEng, latitude: _city.latitude, longitude: _city.longitude, timezone: _city.timezone });
 }
 function getCoordinate() {
     return api.get("https://api.openweathermap.org/geo/1.0/reverse?lat=" + latitude + "&lon=" + longitude + "&appid=" + KeyAPI + "&limit=1");
@@ -67,7 +68,22 @@ async function success(pos) {
     latitude = crd.latitude;
     longitude = crd.longitude;
     city = (await getCoordinate())[0].local_names.ru;
-
+    if (typeof cityParam != "undefined" && cityParam != null) {
+        addCity(false, getTimezone());
+        for (var cityVal of cities.keys()) {
+            if (cities.get(cityVal).nameEng == cityParam) {
+                city = cityVal;
+                nameEng = cities.get(cityVal).nameEng;
+                latitude = cities.get(cityVal).latitude;
+                longitude = cities.get(cityVal).longitude;
+                timezone = cities.get(cityVal).timezone;
+                select_city.value = city;
+                break;
+            }
+        }
+    } else {
+        addCity(true, getTimezone());
+    }
     // перерисовать страницу
     panel.classList.add("visually-hidden");
     container.innerHTML = "";
@@ -77,17 +93,32 @@ async function success(pos) {
     date.setMinutes(date.getMinutes() + date.getTimezoneOffset() + timezone * 60);
     loading.innerHTML = "";
     panel.classList.remove("visually-hidden");
-    addCity(true);
     fillCards();
     console.log("success");
 }
 
-function error(err) {
+async function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
+    if (typeof cityParam != "undefined" && cityParam != null) {
+        for (var cityVal of cities.keys()) {
+            if (cities.get(cityVal).nameEng == cityParam) {
+                city = cityVal;
+                nameEng = cities.get(cityVal).nameEng;
+                latitude = cities.get(cityVal).latitude;
+                longitude = cities.get(cityVal).longitude;
+                timezone = cities.get(cityVal).timezone;
+                select_city.value = city;
+                break;
+            }
+        }
+    }
+    await getAllWeather();
     date.setMinutes(date.getMinutes() + date.getTimezoneOffset() + timezone * 60);
     loading.innerHTML = "";
     panel.classList.remove("visually-hidden");
-    fillCards(0);
+
+    fillCards();
+    buttonCity.setAttribute("href", "./windowCity/index.html?city=" + nameEng);
     console.log("error");
 }
 function findIndexNow() {
@@ -175,6 +206,10 @@ function directionByDergees(dergees) {
     if (dergees < 337.5) return "СЗ";
     return "С";
 }
+async function getTimezone() {
+    var helpObject = await getWeathersRequest();
+    return helpObject.timezone_offset / 3600;
+}
 async function getAllWeather() {
     date = new Date();
     weathers = [];
@@ -199,7 +234,7 @@ async function getAllWeather() {
     // заполнили на все дни
     for (const iterator of helpObject.daily) {
         weathers.push(iterator);
-    };
+    }
 }
 
 function fillCites() {
@@ -212,9 +247,9 @@ function fillCites() {
     }
 }
 
-function addCity(selected = false, ADD = false) {
+function addCity(selected = false, _timezone) {
     if (!cities.has(city)) {
-        cities.set(city, { latitude: latitude, longitude: longitude, timezone: timezone });
+        cities.set(city, { latitude: latitude, longitude: longitude, timezone: _timezone });
         const _option = document.createElement("option");
         _option.setAttribute("value", city);
         _option.innerText = city;
@@ -239,14 +274,18 @@ const loading = document.querySelector("#loading");
 const select_city = document.querySelector("#select_city");
 panel.classList.add("visually-hidden");
 
+const buttonCity = document.querySelector("#buttonCity");
+
 select_city.addEventListener(
     "change",
     async function () {
         if (this.value != city) {
             city = this.value;
+            nameEng = cities.get(this.value).nameEng;
             latitude = cities.get(this.value).latitude;
             longitude = cities.get(this.value).longitude;
             timezone = cities.get(this.value).timezone;
+            buttonCity.setAttribute("href", "./windowCity/index.html?city=" + nameEng);
             //перерисовать страницу
             panel.classList.add("visually-hidden");
             container.innerHTML = "";
@@ -263,7 +302,5 @@ select_city.addEventListener(
 
 loading.innerHTML = spinnerInTable;
 fillCites();
-
-await getAllWeather();
-
-navigator.geolocation.getCurrentPosition(await success, error);
+let cityParam = new URLSearchParams(window.location.search).get("city");
+navigator.geolocation.getCurrentPosition(await success, await error);

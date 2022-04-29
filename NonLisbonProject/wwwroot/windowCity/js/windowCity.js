@@ -1,6 +1,6 @@
 import api from "/utils/api.js";
 
-const KeyAPI = "8e60906d7c520861f76a479b2765c285";
+const KeyAPI = "14ad920bb45256b5fdd0f59c75dbd86c";
 var city = "Москва";
 var nameEng = "Moscow";
 var id = 17326249;
@@ -70,9 +70,10 @@ function getCountImage() {
 async function getPhoto(id, nameInst) {
     var first = true;
     var countImages = await getCountImage();
+    await getWeatherNow();
+    prediction.innerText = await getClothesRequest();
     for (let index = 0; index < countImages; index++) {
         let carouselItem = templateCarousel.content.cloneNode(true);
-        console.log(carouselItem);
         carouselItem.querySelector("#image").setAttribute("src", "/photo/" + nameEng + "/" + index + ".jpg");
 
         if (first) {
@@ -107,6 +108,7 @@ const templateCarousel = document.querySelector("#carousel_item");
 const alert = document.querySelector("#alert");
 const select_city = document.querySelector("#select_city");
 const prediction = document.querySelector("#prediction");
+const buttonCity = document.querySelector("#buttonCity");
 
 panel.classList.add("visually-hidden");
 loading.innerHTML = spinnerInTable;
@@ -122,16 +124,11 @@ select_city.addEventListener(
             nameInst = cities.get(this.value).nameInst;
             latitude = cities.get(this.value).latitude;
             longitude = cities.get(this.value).longitude;
-
+            buttonCity.setAttribute("href", "../index.html?city=" + nameEng);
             //перерисовать страницу
             panel.classList.add("visually-hidden");
             carousel.innerHTML = "";
             loading.innerHTML = spinnerInTable;
-            await getWeatherNow();
-            console.log("cityEnd", nameEng);
-            console.log("weatherNow.weather.id", weatherNow.weather[0].id);
-            console.log("weatherNow.temp", weatherNow.temp);
-            prediction.innerText = await getClothesRequest();
             var check = await getPhoto(id, nameInst);
 
             loading.innerHTML = "";
@@ -141,7 +138,25 @@ select_city.addEventListener(
     false
 );
 
+let cityParam = new URLSearchParams(window.location.search).get("city");
+console.log(cityParam);
+if (typeof cityParam != "undefined") {
+    for (var cityVal of cities.keys()) {
+        if (cities.get(cityVal).nameEng == cityParam) {
+            city = cityVal;
+            nameEng = cities.get(cityVal).nameEng;
+            id = cities.get(cityVal).id;
+            nameInst = cities.get(cityVal).nameInst;
+            latitude = cities.get(cityVal).latitude;
+            longitude = cities.get(cityVal).longitude;
+            select_city.value = city;
+            break;
+        }
+    }
+}
+
+buttonCity.setAttribute("href", "../index.html?city=" + nameEng);
 await getWeatherNow();
-//var check = await getPhoto(id, nameInst);
+var check = await getPhoto(id, nameInst);
 panel.classList.remove("visually-hidden");
 loading.innerHTML = "";
