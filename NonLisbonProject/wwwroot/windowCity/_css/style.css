@@ -20,7 +20,7 @@ footer {
 }
 
 .height-image {
-    max-height: 80vh;
+    max-height: 75vh;
 }
 .color_datetime {
     color: white;
@@ -38,4 +38,10 @@ footer {
 }
 .alert div {
     font-size: 20px;
+}
+.wrapper {
+    width: 100%;
+    height: 470px;
+    display: grid;
+    grid-template-columns: 60% 40%;
 }

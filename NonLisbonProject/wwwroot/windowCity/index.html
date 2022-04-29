@@ -28,7 +28,7 @@
     <my-header value="NonLisbon"></my-header>
     <main class="my-3">
         <div class="container-fluid  px-5">
-            <div class = "d-flex justify-content-center" id="alert"></div>
+            <div class="d-flex justify-content-center" id="alert"></div>
             <div id="loading"></div>
             <div id="main_panel">
                 <div class="d-flex justify-content-center mb-1 gap-1" id="find_panel">
@@ -37,28 +37,32 @@
                     </div>
                     <button class="btn btn-primary text-center flex-box col ms-1" type="button">Погода в городе</button>
                 </div>
-                <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
-                    <div class="carousel-inner" id="carousel"></div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden text-black">Next</span>
-                    </button>
+                <div class="wrapper height-image">
+                    <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                        <div class="carousel-inner" id="carousel"></div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden text-black">Next</span>
+                        </button>
+                    </div>
+                    <div class="card" style="margin-left: 2%">
+                        <h5 class="card-header">Наши рекомендации</h5>
+                        <div class="card-body">
+                            <h5 class="card-title" id="prediction">Text prediction.</h5>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <template id="carousel_item">
                 <div class="carousel-item text-center">
-                    <img class="img-fluid height-image" src="" id="image" class="d-block w-100">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Third slide label</h5>
-                        <p>Some representative placeholder content for the third slide.</p>
-                    </div>
+                    <img class="img-fluid height-image " src="" id="image" class="d-block w-100">
                 </div>
             </template>
 

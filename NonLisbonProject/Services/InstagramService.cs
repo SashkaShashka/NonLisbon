@@ -17,6 +17,13 @@ namespace NonLisbonProject.Services
 
             
         }
+        public static int GetCountImages(string city)
+        {
+            StringBuilder path = new StringBuilder(Directory.GetCurrentDirectory());
+            path.Append("\\wwwroot\\photo\\");
+            path.Append(city);
+            return new DirectoryInfo(path.ToString()).GetFiles().Length;
+        }
 
         private static async Task<bool> Run_Py_Script(string filename, int count, string id, string nameInst)
         {

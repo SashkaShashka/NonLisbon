@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NonLisbonProject.Services;
+using System.Text.Json;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,20 +12,12 @@ namespace NonLisbonProject.Controllers
     [ApiController]
     public class ClothesController : ControllerBase
     {
-        // GET: api/<ClothesController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        // GET api/<ClothesController>/5
 
         [HttpGet()]
         public string GetPridiction(string city, int weatherId, double temperature)
         {
             
-            return ClothesService.GetPrediction(city,weatherId,temperature);
+            return JsonSerializer.Serialize<string>(ClothesService.GetPrediction(city,weatherId,temperature));
         }
 
         // POST api/<ClothesController>

@@ -41,13 +41,13 @@ namespace NonLisbonProject.Services
 
             // верхняя одежда города
             HashSet<string> UpClothes = null;
-            if (city == "Deli" || city == "Sidney")
+            if (city == "Deli" || city == "Sydney")
                 UpClothes = new HashSet<string>(UpClothesDeliSidney);
             if (city == "NewYork")
                 UpClothes = new HashSet<string>(UpClothesNewYork);
             if (city == "London" || city == "Paris")
                 UpClothes = new HashSet<string>(UpClothesLondonParis);
-            if (city == "Rome" || city == "Tokio" || city == "Madrid")
+            if (city == "Rome" || city == "Tokyo" || city == "Madrid")
                 UpClothes = new HashSet<string>(UpClothesTokioMadridRome);
             if (city == "Moscow" || UpClothes == null)
                 UpClothes = new HashSet<string>(UpClothesMoscow);
